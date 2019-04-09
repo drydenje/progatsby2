@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { graphql } from 'gatsby';
-import Layout from './layout';
+import React, { Component } from "react";
+import { graphql } from "gatsby";
+import Layout from "./layout";
 
 //Static query
 // Used anywhere, but doesn't accept variables, can't use context
@@ -9,35 +9,34 @@ import Layout from './layout';
 // Must be used on pages, more options to use
 
 class postLayout extends Component {
-   render() {
-      const { markdownRemark } = this.props.data;
+  render() {
+    const { markdownRemark } = this.props.data;
+    const { location } = this.props;
 
-      return (
-         <Layout>
-            <h1>{markdownRemark.frontmatter.title}</h1>
-            <div dangerouslySetInnerHTML={{
-               __html: markdownRemark.html
-            }} />
-         </Layout>
-      );
-   }
+    return (
+      <Layout location={location}>
+        <h1>{markdownRemark.frontmatter.title}</h1>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: markdownRemark.html,
+          }}
+        />
+      </Layout>
+    );
+  }
 }
 
 export default postLayout;
 
-export const query = graphql `
-   query PostQuery($slug: String!) {
-      markdownRemark(frontmatter:{
-      slug:{
-         eq: $slug
-      }
-   }) {
+export const query = graphql`
+  query PostQuery($slug: String!) {
+    markdownRemark(frontmatter: { slug: { eq: $slug } }) {
       html
       frontmatter {
-         title
-         date
-         slug
+        title
+        date
+        slug
       }
-   }
-   }
+    }
+  }
 `;
