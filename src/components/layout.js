@@ -5,14 +5,23 @@
  * See: https://www.gatsbyjs.org/docs/static-query/
  */
 
-import React from "react"
-import PropTypes from "prop-types"
-import { StaticQuery, graphql } from "gatsby"
-import Helmet from 'react-helmet';
+import React from "react";
+import PropTypes from "prop-types";
+import { StaticQuery, graphql } from "gatsby";
+import Helmet from "react-helmet";
+import styled from "styled-components";
 
-import Header from "./header"
-import Archive from "./archive"
-import "./layout.css"
+import Header from "./header";
+import Archive from "./archive";
+import "./layout.css";
+
+const MainLayout = styled.main`
+  max-width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 40px;
+`;
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -28,42 +37,31 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <>
-         <Helmet
-            title={data.site.siteMetadata.title}
-            meta={[
-               { 
-                  name: 'description',
-                  content: data.site.siteMetadata.description,
-               },
-               { 
-                  name: 'keywords', 
-                  content: 'sample' ,
-               }
-            ]} />
+        <Helmet
+          title={data.site.siteMetadata.title}
+          meta={[
+            {
+              name: "description",
+              content: data.site.siteMetadata.description,
+            },
+            {
+              name: "keywords",
+              content: "sample",
+            },
+          ]}
+        />
         <Header siteTitle={data.site.siteMetadata.title} />
-        <div
-          style={{
-            margin: `0 auto`,
-            maxWidth: 960,
-            padding: `0px 1.0875rem 1.45rem`,
-            paddingTop: 0,
-          }}
-        >
-          <main>{children}</main>
-          <footer>
-            © {new Date().getFullYear()}, Built with
-            {` `}
-            <a href="https://www.gatsbyjs.org">Gatsby</a>
-          </footer>
-        </div>
-         <Archive /> 
+        <MainLayout>
+          <div>{children}</div>
+          <Archive />
+        </MainLayout>
       </>
     )}
   />
-)
+);
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
-export default Layout
+export default Layout;

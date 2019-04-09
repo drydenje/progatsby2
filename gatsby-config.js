@@ -37,6 +37,7 @@ module.exports = {
           path: `${__dirname}/src/posts`,
           name: 'posts',
        }
-    }
+    },
+    `gatsby-plugin-styled-components`,
   ],
 }
